@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Pascal Nauroy</title>
+  <style>
+    :root {
+      --bg: #030915;
+      --bg2: #081427;
+      --panel: rgba(10, 18, 32, 0.96);
+      --panel2: rgba(14, 24, 41, 0.96);
+      --text: #f4f8ff;
+      --muted: #93a6c3;
+      --accent: #7cc8ff;
+      --accent2: #84f3d2;
+      --gold: #f4c978;
+      --line: rgba(255,255,255,0.08);
+      --chip: rgba(124,200,255,0.1);
+      --shadow: 0 18px 40px rgba(0,0,0,0.32);
+      --font-sm: 12px;
+      --font-md: 16px;
+      --font-lg: clamp(30px, 4vw, 42px);
+    }
+
+    * { box-sizing: border-box; font-family: inherit; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top center, #13284b 0%, #0a1730 24%, var(--bg) 58%, #02060d 100%);
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 64px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 44px minmax(260px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #11213b, #091120);
+      border: 1px solid rgba(124,200,255,0.28);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+
+    .logo svg { width: 20px; height: 20px; fill: var(--accent); }
+
+    .search-wrap {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .search {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      padding: 0 80px 0 14px;
+      outline: none;
+    }
+
+    .search::placeholder { color: #8fa0b8; }
+
+    .search-kbd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 6px;
+      font-size: var(--font-sm);
+      color: #dbe7f6;
+    }
+
+    .search-kbd span {
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: var(--font-sm);
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: var(--font-lg);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: var(--font-md);
+      line-height: 1.6;
+      max-width: 920px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .filter-btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: var(--font-sm);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: rgba(124,200,255,0.44);
+      background: rgba(124,200,255,0.12);
+    }
+
+    .theme-block {
+      margin-top: 34px;
+    }
+
+    .theme-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .theme-title {
+      font-size: var(--font-md);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .theme-desc {
+      color: var(--muted);
+      font-size: var(--font-sm);
+      line-height: 1.55;
+      max-width: 860px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(12,21,37,0.98), rgba(8,13,24,0.98));
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: .18s ease;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(124,200,255,0.28);
+      box-shadow: 0 22px 46px rgba(0,0,0,0.36);
+    }
+
+    .visual {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background:
+        radial-gradient(circle at 22% 20%, rgba(124,200,255,0.18), transparent 36%),
+        radial-gradient(circle at 78% 22%, rgba(132,243,210,0.16), transparent 38%),
+        linear-gradient(140deg, #172840 0%, #0f1b31 45%, #090f1a 100%);
+    }
+
+    .visual::before, .visual::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    /* Robotics */
+    .visual.robot::before {
+      width: 150px; height: 150px;
+      left: calc(50% - 75px); top: calc(50% - 75px);
+      border-radius: 26px;
+      border: 14px solid rgba(124,200,255,0.72);
+      transform: rotate(45deg);
+      box-shadow: 0 0 0 20px rgba(255,255,255,0.04);
+    }
+    .visual.robot::after {
+      width: 90px; height: 90px;
+      left: calc(50% - 45px); top: calc(50% - 45px);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(132,243,210,0.95) 0 10px, transparent 11px),
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,0.38) 0 4px, transparent 5px),
+        radial-gradient(circle at 70% 35%, rgba(255,255,255,0.38) 0 4px, transparent 5px);
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    /* Aerospace actuator */
+    .visual.aero::before {
+      width: 230px; height: 10px;
+      left: calc(50% - 115px); top: calc(50% - 5px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(124,200,255,0.85), rgba(255,255,255,0.08));
+      border-radius: 999px;
+      box-shadow: 0 0 0 12px rgba(255,255,255,0.04);
+      transform: rotate(-15deg);
+    }
+    .visual.aero::after {
+      width: 120px; height: 120px;
+      left: calc(50% - 60px); top: calc(50% - 60px);
+      border-radius: 50%;
+      border: 14px solid rgba(244,201,120,0.78);
+      box-shadow:
+        inset 0 0 0 14px rgba(255,255,255,0.04),
+        0 0 0 24px rgba(255,255,255,0.03);
+    }
+
+    /* Electronics / architecture */
+    .visual.electronics::before {
+      width: 220px; height: 140px;
+      left: calc(50% - 110px); top: calc(50% - 70px);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+        linear-gradient(90deg, transparent 49%, rgba(124,200,255,0.18) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(124,200,255,0.18) 50%, transparent 51%);
+      background-size: auto, 24px 24px, 24px 24px;
+      border: 1px solid rgba(124,200,255,0.26);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .visual.electronics::after {
+      width: 140px; height: 2px;
+      left: calc(50% - 70px); top: calc(50% - 1px);
+      background: rgba(132,243,210,0.78);
+      box-shadow:
+        -55px -32px 0 0 rgba(124,200,255,0.8),
+        58px -28px 0 0 rgba(124,200,255,0.8),
+        -42px 26px 0 0 rgba(132,243,210,0.78),
+        48px 32px 0 0 rgba(132,243,210,0.78),
+        0 -40px 0 0 rgba(255,255,255,0.18),
+        0 40px 0 0 rgba(255,255,255,0.18);
+    }
+
+    /* AI / cloud */
+    .visual.ai::before {
+      width: 180px; height: 180px;
+      left: calc(50% - 90px); top: calc(50% - 90px);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(124,200,255,0.92) 0 6px, transparent 7px),
+        radial-gradient(circle at 22% 28%, rgba(124,200,255,0.88) 0 5px, transparent 6px),
+        radial-gradient(circle at 78% 25%, rgba(132,243,210,0.88) 0 5px, transparent 6px),
+        radial-gradient(circle at 26% 76%, rgba(132,243,210,0.88) 0 5px, transparent 6px),
+        radial-gradient(circle at 74% 74%, rgba(124,200,255,0.88) 0 5px, transparent 6px);
+    }
+    .visual.ai::after {
+      width: 180px; height: 180px;
+      left: calc(50% - 90px); top: calc(50% - 90px);
+      background:
+        linear-gradient(30deg, transparent 48%, rgba(255,255,255,0.16) 49%, rgba(255,255,255,0.16) 51%, transparent 52%),
+        linear-gradient(-26deg, transparent 48%, rgba(255,255,255,0.16) 49%, rgba(255,255,255,0.16) 51%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.12) 49%, rgba(255,255,255,0.12) 51%, transparent 52%);
+    }
+
+    /* IoT */
+    .visual.iot::before {
+      width: 112px; height: 168px;
+      left: calc(50% - 56px); top: calc(50% - 84px);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.03));
+      border: 2px solid rgba(124,200,255,0.26);
+      box-shadow: 0 0 0 14px rgba(255,255,255,0.03);
+    }
+    .visual.iot::after {
+      width: 220px; height: 220px;
+      left: calc(50% - 110px); top: calc(50% - 110px);
+      background:
+        radial-gradient(circle, transparent 56%, rgba(132,243,210,0.34) 57%, transparent 60%),
+        radial-gradient(circle, transparent 38%, rgba(124,200,255,0.26) 39%, transparent 42%),
+        radial-gradient(circle, transparent 20%, rgba(124,200,255,0.18) 21%, transparent 24%);
+    }
+
+    /* Desktop / software */
+    .visual.software::before {
+      width: 210px; height: 130px;
+      left: calc(50% - 105px); top: calc(50% - 65px);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.03));
+      border: 1px solid rgba(124,200,255,0.2);
+      box-shadow: inset 0 34px 0 rgba(255,255,255,0.05);
+    }
+    .visual.software::after {
+      width: 150px; height: 2px;
+      left: calc(50% - 75px); top: calc(50% - 16px);
+      background: rgba(124,200,255,0.7);
+      box-shadow:
+        0 18px 0 rgba(255,255,255,0.16),
+        0 36px 0 rgba(132,243,210,0.38),
+        0 54px 0 rgba(255,255,255,0.12);
+    }
+
+    /* Mechanical tool */
+    .visual.tool::before {
+      width: 200px; height: 20px;
+      left: calc(50% - 100px); top: calc(50% - 10px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(244,201,120,0.88), rgba(255,255,255,0.1));
+      border-radius: 999px;
+      transform: rotate(-32deg);
+    }
+    .visual.tool::after {
+      width: 70px; height: 70px;
+      left: calc(50% + 18px); top: calc(50% - 48px);
+      border-radius: 18px;
+      border: 10px solid rgba(124,200,255,0.72);
+      transform: rotate(-32deg);
+      box-shadow: 0 0 0 14px rgba(255,255,255,0.04);
+    }
+
+    .content {
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: var(--font-sm);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .title {
+      font-size: var(--font-md);
+      font-weight: 800;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .summary {
+      color: #dce5f1;
+      font-size: var(--font-sm);
+      line-height: 1.56;
+      margin-bottom: 12px;
+      min-height: 76px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .chip {
+      font-size: var(--font-sm);
+      line-height: 1;
+      padding: 6px 7px;
+      background: var(--chip);
+      color: var(--accent);
+      border: 1px solid rgba(124,200,255,0.12);
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: var(--font-sm);
+    }
+
+    .kind { color: var(--muted); }
+    .details {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: var(--font-sm);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 1180px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { grid-template-columns: 1fr; }
+      .filters { justify-content: flex-start; }
+    }
+
+    @media (max-width: 760px) {
+      .page { padding: 14px 14px 50px; }
+      .topbar { grid-template-columns: 40px 1fr; gap: 12px; }
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+      .grid { grid-template-columns: 1fr; }
+      .theme-head {
+        flex-direction: column;
+        align-items: start;
+      }
+      .summary { min-height: 0; }
+    }
+.nav {
+      justify-content: flex-end;
+      gap: 34px;
+      min-width: 260px;
+    }
+
+    .nav a {
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 760px) {
+.nav {
+        gap: 18px;
+      }
+    }
+    
+  
+    body {
+      padding-top: 84px;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(18,37,69,0.96), rgba(15,31,58,0.96));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .site-header .topbar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      margin-bottom: 0;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 44px minmax(240px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #11213b, #091120);
+      border: 1px solid rgba(124,200,255,0.28);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+
+    .logo svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .search {
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      padding: 0 80px 0 14px;
+      outline: none;
+    }
+
+    .search::placeholder { color: #8fa0b8; }
+
+    .search-kbd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 6px;
+      font-size: var(--font-sm);
+      color: #dbe7f6;
+    }
+
+    .search-kbd span {
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 34px;
+      min-width: 260px;
+      font-size: var(--font-sm);
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    .page {
+      max-width: 1280px !important;
+      margin: 0 auto;
+      padding: 20px 24px 64px !important;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 92px;
+      }
+
+      .site-header .topbar {
+        padding: 12px 16px;
+      }
+
+      .topbar {
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+      }
+
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+
+      .page {
+        padding: 16px 16px 44px !important;
+      }
+    }
+
+  
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+      min-width: 260px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .lang-switch a {
+      color: #fff;
+      text-decoration: none;
+      font-size: var(--font-sm);
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .lang-switch a.active {
+      background: rgba(124,200,255,0.18);
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: var(--font-sm);
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 760px) {
+      .header-right {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        min-width: 0;
+      }
+      .nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+    }
+    
+  
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      text-decoration: none;
+      font-size: var(--font-sm);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cv-download:hover {
+      border-color: rgba(124,200,255,0.30);
+      background: rgba(124,200,255,0.10);
+      color: var(--accent);
+    }
+
+    @media (max-width: 760px) {
+      .cv-download {
+        order: 2;
+      }
+    }
+
+  
+    .visual.has-image {
+      background: #e9ecef;
+    }
+
+    .visual.has-image::before,
+    .visual.has-image::after {
+      display: none;
+    }
+
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+  
+
+    /* mobile header compact one-line */
+    .cv-label-short { display: none; }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 72px !important;
+      }
+
+      .site-header .topbar {
+        padding: 10px 12px !important;
+      }
+
+      .topbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        grid-template-columns: none !important;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+      }
+
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+      }
+
+      .nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: var(--font-sm) !important;
+      }
+
+      .nav a {
+        flex: 0 1 auto;
+        white-space: nowrap;
+      }
+
+      .lang-switch {
+        flex: 0 0 auto;
+        gap: 4px;
+        padding: 3px;
+      }
+
+      .lang-switch a {
+        font-size: var(--font-sm);
+        padding: 6px 8px;
+      }
+
+      .cv-download {
+        order: 0 !important;
+        flex: 0 0 auto;
+        padding: 6px 8px !important;
+        gap: 0 !important;
+        font-size: var(--font-sm) !important;
+      }
+
+      .cv-label-full { display: none; }
+      .cv-label-short { display: inline; }
+    }
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="topbar">
+      <div class="logo" aria-label="Logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2c-3.1 2.6-6.1 4-8.7 4.6.2 6 4.3 11.2 8.7 15.4 4.4-4.2 8.5-9.4 8.7-15.4C18.1 6 15.1 4.6 12 2Zm-1.1 5.3 5.2 2.3-2.6.8-2 3.8-.9-2.6-2.7-.5 3-1.1Z"/>
+        </svg>
+      </div>
+
+      <div class="header-right">
+        <nav class="nav">
+          <a href="about_me_EN.html">About</a>
+          <a href="Experience_EN.html">Experience</a>
+          <a href="Projects_EN.html" class="active" aria-current="page">Projects</a>
+        </nav>
+        <a class="cv-download" href="CV_EN.pdf" download><span class="cv-label-full">Download CV</span><span class="cv-label-short">CV</span></a>
+        <div class="lang-switch">
+          <a href="Projects_FR.html">FR</a>
+          <a href="Projects_EN.html" class="active">EN</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="page">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Selected projects</div>
+        <h1>Projects</h1>
+        <p>A portfolio grouped by theme to reflect the full journey: aerospace actuation and critical electronics, connected robotics, cloud and AI services, as well as edge systems extending physical products into data-driven platforms.</p>
+      </div>
+
+      <div>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="aerospace">Aerospace & actuation</button>
+          <button class="filter-btn" data-filter="robotics">Robotics & morphology</button>
+          <button class="filter-btn" data-filter="platform">Cloud, data & AI</button>
+          <button class="filter-btn" data-filter="iot">IoT & edge</button>
+          <button class="filter-btn" data-filter="industrial">Industrial foundations</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="projectsRoot"></div>
+</div>
+
+  <script>
+    const THEMES = [
+      {
+        id: "aerospace",
+        title: "Aerospace, actuation & critical electronics",
+        description: "Programs and R&T work around electric actuation, embedded electronics, control, and validation in demanding aerospace environments.",
+        cards: [
+          {
+            title: "A320 Aileron Actuation Control Electronics",
+            detailUrl: "aileron_EN.html",
+            img: "aileron.png",
+            period: "2009 – 2010",
+            org: "Safran · Airbus",
+            summary: "Development of the electronic control product for an aileron actuation system used in the context of A320 flight testing, with a strong focus on embedded architecture and power-conversion assessment.",
+            tags: ["Safran", "A320", "Flight Control", "R&T"],
+            kind: "Aerospace program",
+            visual: "aero"
+          },
+          {
+            title: "Generic Actuator Control Electronics",
+            detailUrl: "actuation2015_EN.html",
+            img: "actuation2015.png",
+            period: "2013 – 2016",
+            org: "Safran · Europe · Airbus",
+            summary: "Standardized actuator-control electronics platform designed for a reusable architecture, safety, and high-power actuation control in advanced aerospace environments.",
+            tags: ["Safran", "Electronics", "Actuator", "SoC"],
+            kind: "Architecture plateforme",
+            visual: "electronics"
+          },
+          {
+            title: "A320 Spoiler Actuation System",
+            detailUrl: "spoiler_EN.html",
+            img: "spoiler.png",
+            period: "2006 – 2008",
+            org: "SKF · Airbus",
+            summary: "Development of a spoiler actuation system for A320 flight tests, combining brushless control, digital core, rectification, and mechanical power transmission.",
+            tags: ["SKF", "Spoiler", "Brushless", "Flight Test"],
+            kind: "Electromechanical system",
+            visual: "aero"
+          },
+          {
+            title: "A400M Artificial Feel Actuator",
+            detailUrl: "throttle_EN.html",
+            img: "throttle.png",
+            period: "2005",
+            org: "SKF · Airbus",
+            summary: "Demonstrator platform for an artificial-feel actuation solution with torque-profile control, digital core, and advanced motor control for pilot feel.",
+            tags: ["SKF", "A400M", "Control Feel", "Demonstrator"],
+            kind: "R&T demonstrator",
+            visual: "electronics"
+          },
+          {
+            title: "Low-cost BizJet autothrottle range",
+            detailUrl: "autothrottle_EN.html",
+            img: "autothrottle.png",
+            period: "2004",
+            org: "SKF",
+            summary: "Creation of a low-cost autothrottle product line for business aviation, combining power electronics, brushless control, segregation logic, and pragmatic product design.",
+            tags: ["SKF", "BizJet", "Autothrottle", "Product Line"],
+            kind: "Product development",
+            visual: "aero"
+          },
+          {
+            title: "Embedded electronics, validation & standards",
+            detailUrl: "methodologie_EN.html",
+            img: "methodologie.png",
+            period: "2000 – 2018",
+            org: "Safran",
+            summary: "Cross-functional work on embedded electronics, validation methodologies, DO-254 / DO-178 environments, ARP-4754 culture, and cross-disciplinary technical leadership.",
+            tags: ["DO-254", "DO-178", "Validation", "Safety-Critical"],
+            kind: "Technical foundation",
+            visual: "electronics"
+          }
+        ]
+      },
+      {
+        id: "robotics",
+        title: "Robotics, morphology & connected product",
+        description: "Projects centered on EUVEKA and on the transition from a mechatronic robot to a connected platform integrating software, data, and services.",
+        cards: [
+          {
+            title: "EUVEKA connected morphological robot",
+            detailUrl: "robot_EN.html",
+            img: "robot.png",
+            period: "2018 – Present",
+            org: "EUVEKA / Robot",
+            summary: "End-to-end technical leadership of a connected mechatronic robot integrating mechanics, electronics, firmware, software, and industrialization constraints.",
+            tags: ["Robot", "Mechatronics", "CTO", "Connected Product"],
+            kind: "Robot product",
+            visual: "robot"
+          },
+          {
+            title: "MIMEO Win64 control suite",
+            detailUrl: "mimeow64_EN.html",
+            img: "mimeow64.png",
+            period: "2018 – Present",
+            org: "EUVEKA / Applicatif",
+            summary: "Desktop environment for robot control, management of morphological flows, data capture, and operational usage in a professional product context.",
+            tags: ["Win64", "Desktop", "Control Suite", "Operations"],
+            kind: "Local suite",
+            visual: "software"
+          },
+          {
+            title: "MIMEO web migration",
+            detailUrl: "mimeoweb_EN.html",
+            img: "mimeoweb.png",
+            period: "2026",
+            org: "EUVEKA / Applicatif",
+            summary: "Modernization initiative aimed at evolving the historical MIMEO software environment toward a web architecture better aligned with scalable services and future uses.",
+            tags: ["Migration", "Web", "Architecture", "Modernization"],
+            kind: "Web suite",
+            visual: "software"
+          },
+          {
+            title: "Robot services ready for the cloud",
+            detailUrl: "robotweb_EN.html",
+            img: "robotweb.png",
+            period: "2024 – 2026",
+            org: "EUVEKA / Robot",
+            summary: "POC and MVP service layers around robot data, connected APIs, cloud services, and new business extensions beyond the physical machine.",
+            tags: ["APIs", "Cloud", "Services", "Platform"],
+            kind: "Robot & cloud product",
+            visual: "iot"
+          },
+          {
+            title: "3D body generator",
+            detailUrl: "avatar_EN.html",
+            img: "avatar.png",
+            period: "2024",
+            org: "EUVEKA / Morphology",
+            summary: "Work on parametric generation of 3D bodies from morphological data, extending product value through digital representation and 3D-related uses.",
+            tags: ["3D", "Avatar", "Morphology", "Blender"],
+            kind: "3D avatar service",
+            visual: "robot"
+          },
+          {
+            title: "Morphological AI engine",
+            detailUrl: "morpho_EN.html",
+            img: "morpho.png",
+            period: "2024 – 2026",
+            org: "EUVEKA / Morphology",
+            summary: "Morphological analysis and AI-oriented scoring work aimed at turning captured body data into usable service intelligence.",
+            tags: ["AI", "Scoring", "Morphology", "Data"],
+            kind: "Morphology service",
+            visual: "ai"
+          }
+        ]
+      },
+      {
+        id: "platform",
+        title: "Cloud, data & AI extensions",
+        description: "Digital projects extending product value through scoring, conversational AI, vision, and deployable cloud services.",
+        cards: [
+          {
+            title: "Fit scoring platform",
+            detailUrl: "fitscore_EN.html",
+            img: "fitscore.png",
+            period: "2026",
+            org: "POC digital",
+            summary: "Textile fit-scoring demonstrator targeting collection repositioning, morphological coverage, and decision support through data analysis.",
+            tags: ["Fit Scoring", "Cloud Run", "Business Demo"],
+            kind: "Scoring service",
+            visual: "ai"
+          },
+          {
+            title: "Generative AI voice platform",
+            detailUrl: "llm_EN.html",
+            img: "llm.png",
+            period: "2025",
+            org: "POC digital",
+            summary: "Multilingual conversational system combining speech-to-text, LLM orchestration, and text-to-speech through web interfaces and APIs.",
+            tags: ["STT", "LLM", "TTS", "Multilingual"],
+            kind: "Interaction service",
+            visual: "ai"
+          },
+          {
+            title: "Facial recognition demo",
+            detailUrl: "face_EN.html",
+            img: "face.png",
+            period: "2025",
+            org: "POC digital",
+            summary: "Deployable cloud demonstrator for facial detection and recognition, designed as a technical showcase with a web interface.",
+            tags: ["Computer Vision", "Recognition", "Cloud"],
+            kind: "Recognition service",
+            visual: "ai"
+          },
+          {
+            title: "WebRTC communication platform",
+            detailUrl: "webrtc_EN.html",
+            img: "webrtc.png",
+            period: "2025",
+            org: "POC digital",
+            summary: "Interactive real-time communication proof of concept for multi-user exchanges in a browser environment.",
+            tags: ["WebRTC", "Realtime", "Web"],
+            kind: "Communication service",
+            visual: "software"
+          }
+        ]
+      },
+      {
+        id: "iot",
+        title: "IoT & edge systems",
+        description: "Field-connected systems built around Raspberry Pi, sensors, RFID, and remote supervision logic.",
+        cards: [
+          {
+            title: "Heat pump controller",
+            detailUrl: "pac_EN.html",
+            img: "pac.png",
+            period: "2026",
+            org: "MVP",
+            summary: "Connected heat-pump controller on Raspberry Pi 4, with remote supervision, VPN access, API logic, and temperature-driven control loops.",
+            tags: ["Raspberry Pi", "Control", "API", "VPN"],
+            kind: "IoT solution",
+            visual: "iot"
+          },
+          {
+            title: "Temperature + IR video node",
+            detailUrl: "iot_EN.html",
+            img: "iot.png",
+            period: "2026",
+            org: "MVP",
+            summary: "Edge node on Raspberry Pi Zero combining temperature measurement and infrared video, designed for lightweight deployment and remote access.",
+            tags: ["Edge", "IR Video", "Sensors", "Pi Zero"],
+            kind: "IoT solution",
+            visual: "iot"
+          },
+          {
+            title: "RFID race recording",
+            detailUrl: "race_EN.html",
+            img: "race.png",
+            period: "2026",
+            org: "POC digital",
+            summary: "Connected event timing system using RFID / NFC tags, with capture logic and web visualization for race-recording scenarios.",
+            tags: ["RFID", "NFC", "Tracking", "Web"],
+            kind: "Tracking service",
+            visual: "iot"
+          }
+        ]
+      },
+      {
+        id: "industrial",
+        title: "Industrial product foundations",
+        description: "Initial product and engineering foundation that built the cross-disciplinary base: tooling, instrumentation, electronics, and field reality.",
+        cards: [
+          {
+            title: "Electric fastening product line",
+            detailUrl: "visseuse_EN.html",
+            img: "visseuse.png",			
+            period: "Before 2000",
+            org: "Georges Renault",
+            summary: "Product responsibility for electric fastening systems at the intersection of mechanics, electronics, operator usage, and industrial performance.",
+            tags: ["Automotive", "Tooling", "Product Line", "Field Use"],
+            kind: "Industrial product",
+            visual: "tool"
+          },
+          {
+            title: "Electronics development for instrumentation",
+            detailUrl: "garos_EN.html",
+            img: "garos.png",			
+            period: "Early career",
+            org: "Garos S.A.",
+            summary: "Electronics development in an instrumentation context, building a solid foundation on components, constraints, and real product behavior.",
+            tags: ["Instrumentation", "Electronics", "Development"],
+            kind: "Instrumentation product",
+            visual: "electronics"
+          }
+        ]
+      }
+    ];
+
+    const root = document.getElementById("projectsRoot");
+    const filterButtons = [...document.querySelectorAll(".filter-btn")];
+    let currentFilter = "all";
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function cardTemplate(card, themeId) {
+      const haystack = [
+        themeId,
+        card.title,
+        card.period,
+        card.org,
+        card.summary,
+        ...(card.tags || [])
+      ].join(" ").toLowerCase();
+
+      return `
+        <article class="card" data-theme="${themeId}" data-search="${haystack}">
+          <div class="visual ${card.img ? `has-image` : (card.visual || "software")}">${card.img ? `<img src="${escapeHtml(card.img)}" alt="${escapeHtml(card.title)}" />` : ``}</div>
+          <div class="content">
+            <div class="meta">
+              <span>${escapeHtml(card.period || "")}</span>
+              <span>${escapeHtml(card.org || "")}</span>
+            </div>
+            <div class="title">${escapeHtml(card.title)}</div>
+            <div class="summary">${escapeHtml(card.summary)}</div>
+            <div class="chips">
+              ${(card.tags || []).map(tag => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}
+            </div>
+            <div class="footer">
+              <span class="kind">${escapeHtml(card.kind || "")}</span>
+              <a href="${escapeHtml(card.detailUrl || "#")}" class="details">View details →</a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function themeTemplate(theme) {
+      return `
+        <section class="theme-block" data-theme-block="${theme.id}">
+          <div class="theme-head">
+            <div>
+              <div class="theme-title">${escapeHtml(theme.title)}</div>
+              <div class="theme-desc">${escapeHtml(theme.description)}</div>
+            </div>
+          </div>
+          <div class="grid">
+            ${(theme.cards || []).map(card => cardTemplate(card, theme.id)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function render() {
+      root.innerHTML = THEMES.map(themeTemplate).join("");
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const blocks = [...document.querySelectorAll("[data-theme-block]")];
+
+      blocks.forEach(block => {
+        const themeId = block.getAttribute("data-theme-block");
+        const cards = [...block.querySelectorAll(".card")];
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const matchesFilter = currentFilter === "all" || card.dataset.theme === currentFilter;
+          const visible = matchesFilter;
+          card.style.display = visible ? "" : "none";
+          if (visible) visibleCount += 1;
+        });
+
+        const blockVisible = currentFilter === "all"
+          ? visibleCount > 0
+          : (themeId === currentFilter && visibleCount > 0);
+
+        block.style.display = blockVisible ? "" : "none";
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        const searchInput = document.querySelector(".search");
+        if (searchInput) searchInput.focus();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

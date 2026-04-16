@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>A320 Aileron Actuation Control Electronics — Pascal Nauroy</title>
+<style>
+:root {
+  --bg: #030915;
+  --bg2: #081427;
+  --panel: rgba(8, 14, 26, 0.96);
+  --text: #f4f8ff;
+  --muted: #93a6c3;
+  --accent: #7cc8ff;
+  --accent2: #84f3d2;
+  --line: rgba(255,255,255,0.08);
+  --chip: rgba(124,200,255,0.10);
+  --shadow: 0 18px 40px rgba(0,0,0,0.32);
+}
+* { box-sizing: border-box; font-family: Inter, Arial, sans-serif; }
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top center, #13284b 0%, #0a1730 24%, var(--bg) 58%, #02060d 100%);
+}
+body { padding-top: 84px; }
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: linear-gradient(180deg, rgba(18,37,69,0.96), rgba(15,31,58,0.96));
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+.site-header .topbar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.logo {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #11213b, #091120);
+  border: 1px solid rgba(124,200,255,0.28);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+  flex: 0 0 36px;
+}
+.logo svg { width: 20px; height: 20px; fill: var(--accent); }
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  min-width: 260px;
+  flex: 1 1 auto;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+}
+.nav a[aria-current="page"] { color: var(--accent); }
+.nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -8px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 999px;
+}
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cv-download:hover {
+  border-color: rgba(124,200,255,0.30);
+  background: rgba(124,200,255,0.10);
+  color: var(--accent);
+}
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+}
+.lang-switch a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+.lang-switch a.active {
+  background: rgba(124,200,255,0.18);
+  color: var(--accent);
+}
+.cv-label-short { display: none; }
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 22px 24px 64px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+.back-link:hover { color: var(--accent); }
+h1 {
+  margin: 0 0 14px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(18, 42, 73, 0.95);
+  border: 1px solid rgba(124,200,255,0.14);
+  color: #dceaff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.meta-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff7f7f;
+}
+.section {
+  margin-top: 28px;
+}
+.section h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.separator {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin-bottom: 14px;
+}
+.about {
+  color: #d7e3f5;
+  font-size: 16px;
+  line-height: 1.78;
+  white-space: pre-line;
+}
+.tags, .techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.tag, .tech {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: #ffffff;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.tech {
+  background: rgba(18, 31, 52, 0.88);
+}
+@media (max-width: 760px) {
+  body { padding-top: 72px; }
+  .site-header .topbar { padding: 10px 12px; }
+  .topbar { gap: 10px; }
+  .logo { width: 32px; height: 32px; flex: 0 0 32px; }
+  .header-right {
+    gap: 10px;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .nav {
+    gap: 10px;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+  .nav a { flex: 0 1 auto; white-space: nowrap; }
+  .lang-switch { gap: 4px; padding: 3px; }
+  .lang-switch a { font-size: 10px; padding: 6px 8px; }
+  .cv-download { padding: 6px 8px; gap: 0; font-size: 10px; }
+  .cv-label-full { display: none; }
+  .cv-label-short { display: inline; }
+  .page { padding: 18px 16px 42px; }
+  .about { font-size: 15px; }
+  .tag, .tech, .meta-chip { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="topbar">
+<div aria-label="Logo" class="logo">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M12 2c-3.1 2.6-6.1 4-8.7 4.6.2 6 4.3 11.2 8.7 15.4 4.4-4.2 8.5-9.4 8.7-15.4C18.1 6 15.1 4.6 12 2Zm-1.1 5.3 5.2 2.3-2.6.8-2 3.8-.9-2.6-2.7-.5 3-1.1Z"></path>
+</svg>
+</div>
+<div class="header-right">
+<nav class="nav">
+<a href="about_me_EN.html">About</a>
+<a href="Experience_EN.html">Experience</a>
+<a aria-current="page" href="Projects_EN.html">Projects</a>
+</nav>
+<a class="cv-download" download="" href="CV_EN.pdf"><span class="cv-label-full">Download CV</span><span class="cv-label-short">CV</span></a>
+<div class="lang-switch">
+<a href="aileron_FR.html">FR</a>
+<a class="active" href="aileron_EN.html">EN</a>
+</div>
+</div>
+</div>
+</header>
+<main class="page">
+<a class="back-link" href="Projects_EN.html">← Back to projects</a>
+<h1>A320 Aileron Actuation Control Electronics</h1>
+<div class="meta-row">
+<span class="meta-chip"><span class="meta-dot"></span> Aerospace</span>
+<span class="meta-chip">Safran · Airbus</span>
+<span class="meta-chip">2009 – 2010</span>
+</div>
+<section class="section">
+<h2>About</h2>
+<div class="separator"></div>
+<div class="about">This project focused on a core building block of an aileron actuation system in the context of A320 flight testing. The challenge was not only to design high-performance control electronics, but also to guarantee behavior that was understandable, robust, and integrable into an aerospace actuation chain where stability, service continuity, and validation are fundamental.
+
+The objective was to deliver electronics able to drive the actuator cleanly, control power conversion, and fit into a system logic compatible with the constraints of a demonstrator or a flight-test program. The work therefore combined electronic architecture, functional analysis, control logic, and careful handling of interfaces with the other subsystems.
+
+The approach consisted of rationalizing the architecture, securing the essential functions, and structuring a technically credible product in a demanding environment. The result was conclusive: the solution strengthened the understanding of the actuation chain, improved the maturity of the electronic product, and provided a serious basis for validation and integration work.</div>
+</section>
+<section class="section">
+<h2>Tags</h2>
+<div class="separator"></div>
+<div class="tags">
+<span class="tag">Actuator</span><span class="tag">Aileron</span><span class="tag">Flight testing</span><span class="tag">Embedded electronics</span><span class="tag">R&amp;T</span>
+</div>
+</section>
+<section class="section">
+<h2>Technologies</h2>
+<div class="separator"></div>
+<div class="techs">
+<span class="tech">FPGA / CPU</span><span class="tech">Brushless control</span><span class="tech">Power conversion</span><span class="tech">Aerospace</span><span class="tech">DO-254</span><span class="tech">DO-178</span><span class="tech">Simulink</span>
+</div>
+</section>
+</main>
+</body>
+</html>
+
+
+

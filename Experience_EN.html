@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>360° Career Path — Pascal Nauroy</title>
+  <style>
+    :root {
+      --bg: #030915;
+      --bg2: #081427;
+      --panel: rgba(10, 18, 32, 0.96);
+      --panel2: rgba(14, 24, 41, 0.96);
+      --text: #f4f8ff;
+      --muted: #93a6c3;
+      --accent: #7cc8ff;
+      --accent2: #84f3d2;
+      --gold: #f4c978;
+      --line: rgba(255,255,255,0.08);
+      --chip: rgba(124,200,255,0.1);
+      --shadow: 0 18px 40px rgba(0,0,0,0.32);
+      --font-sm: 12px;
+      --font-md: 16px;
+      --font-lg: clamp(30px, 4vw, 42px);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top center, #13284b 0%, #0a1730 24%, var(--bg) 58%, #02060d 100%);
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 64px;
+    }
+
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: var(--font-lg);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 16px auto 0;
+      max-width: 980px;
+      color: var(--muted);
+      font-size: var(--font-md);
+      line-height: 1.6;
+    }
+
+    .positioning {
+      max-width: 1120px;
+      margin: 26px auto 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .positioning .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px 16px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .card .label {
+      color: var(--accent2);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .card .value {
+      font-size: var(--font-md);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1120px;
+      margin: 30px auto 0;
+      padding: 12px 0;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(140,199,255,0.2), rgba(140,199,255,1), rgba(140,199,255,0.2));
+      box-shadow: 0 0 20px rgba(140,199,255,0.22);
+    }
+
+    .item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 58px;
+      min-height: 190px;
+      margin-bottom: 22px;
+    }
+
+    .item::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      background: var(--line);
+      box-shadow: 0 0 0 7px rgba(140,199,255,0.08);
+      z-index: 2;
+    }
+
+    .item.major::before {
+      width: 16px;
+      height: 16px;
+      top: 18px;
+      background: var(--gold);
+      box-shadow: 0 0 0 8px rgba(247,204,124,0.10), 0 0 24px rgba(247,204,124,0.25);
+    }
+
+    .content {
+      max-width: 430px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 20px 20px 18px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .item.major .content {
+      border-color: rgba(247,204,124,0.24);
+    }
+
+    .left {
+      justify-self: end;
+      text-align: right;
+      margin-right: 24px;
+    }
+
+    .right {
+      justify-self: start;
+      text-align: left;
+      margin-left: 24px;
+    }
+
+    .date {
+      color: var(--accent);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(158,230,215,0.22);
+      background: rgba(158,230,215,0.08);
+      color: var(--accent2);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .item.major .tag {
+      border-color: rgba(247,204,124,0.28);
+      background: rgba(247,204,124,0.09);
+      color: var(--gold);
+    }
+
+    .role {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .org {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .desc, .impact, .stack {
+      font-size: 15px;
+      line-height: 1.56;
+    }
+
+    .desc { color: #fff; margin-bottom: 10px; }
+    .impact { color: #edf5ff; margin-bottom: 10px; }
+    .impact strong { color: #fff; }
+    .stack { color: var(--muted); }
+
+    .closing {
+      max-width: 980px;
+      margin: 36px auto 0;
+      padding: 22px 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      color: var(--muted);
+      font-size: var(--font-md);
+      line-height: 1.6;
+    }
+
+    .closing strong { color: #fff; }
+
+    @media (max-width: 980px) {
+      .positioning { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 820px) {
+      .page { padding: 18px 16px 50px; }
+      .positioning { grid-template-columns: 1fr; }
+      .subtitle, .closing { font-size: 16px; }
+      .timeline::before { left: 18px; transform: none; }
+      .item {
+        grid-template-columns: 1fr;
+        gap: 0;
+        min-height: 0;
+        padding-left: 44px;
+      }
+      .item::before, .item.major::before { left: 18px; transform: none; }
+      .left, .right {
+        justify-self: stretch;
+        text-align: left;
+        margin: 0;
+      }
+      .content { max-width: none; }
+      .role { font-size: 26px; }
+      .org { font-size: 18px; }
+    }
+@media (max-width: 760px) {
+.nav {
+        gap: 18px;
+      }
+    }
+@media (max-width: 760px) {
+.nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+    }
+
+  
+    body {
+      padding-top: 84px;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(18,37,69,0.96), rgba(15,31,58,0.96));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .site-header .topbar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      margin-bottom: 0;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 44px minmax(240px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #11213b, #091120);
+      border: 1px solid rgba(124,200,255,0.28);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+
+    .logo svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .search {
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      padding: 0 80px 0 14px;
+      outline: none;
+    }
+
+    .search::placeholder { color: #8fa0b8; }
+
+    .search-kbd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+      color: #dbe7f6;
+    }
+
+    .search-kbd span {
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 34px;
+      min-width: 260px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    .page {
+      max-width: 1280px !important;
+      margin: 0 auto;
+      padding: 20px 24px 64px !important;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 92px;
+      }
+
+      .site-header .topbar {
+        padding: 12px 16px;
+      }
+
+      .topbar {
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+      }
+
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+
+      .page {
+        padding: 16px 16px 44px !important;
+      }
+    }
+
+  
+    .topbar {
+      grid-template-columns: 44px auto;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        grid-template-columns: 40px 1fr;
+      }
+    }
+  
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+      min-width: 260px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .lang-switch a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .lang-switch a.active {
+      background: rgba(124,200,255,0.18);
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 760px) {
+      .header-right {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        min-width: 0;
+      }
+      .nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+    }
+    
+  
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cv-download:hover {
+      border-color: rgba(124,200,255,0.30);
+      background: rgba(124,200,255,0.10);
+      color: var(--accent);
+    }
+
+    @media (max-width: 760px) {
+      .cv-download {
+        order: 2;
+      }
+    }
+
+  
+
+    /* mobile header compact one-line */
+    .cv-label-short { display: none; }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 72px !important;
+      }
+
+      .site-header .topbar {
+        padding: 10px 12px !important;
+      }
+
+      .topbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        grid-template-columns: none !important;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+      }
+
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+      }
+
+      .nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 11px !important;
+      }
+
+      .nav a {
+        flex: 0 1 auto;
+        white-space: nowrap;
+      }
+
+      .lang-switch {
+        flex: 0 0 auto;
+        gap: 4px;
+        padding: 3px;
+      }
+
+      .lang-switch a {
+        font-size: 10px;
+        padding: 6px 8px;
+      }
+
+      .cv-download {
+        order: 0 !important;
+        flex: 0 0 auto;
+        padding: 6px 8px !important;
+        gap: 0 !important;
+        font-size: 10px !important;
+      }
+
+      .cv-label-full { display: none; }
+      .cv-label-short { display: inline; }
+    }
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="topbar">
+      <div class="logo" aria-label="Logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2c-3.1 2.6-6.1 4-8.7 4.6.2 6 4.3 11.2 8.7 15.4 4.4-4.2 8.5-9.4 8.7-15.4C18.1 6 15.1 4.6 12 2Zm-1.1 5.3 5.2 2.3-2.6.8-2 3.8-.9-2.6-2.7-.5 3-1.1Z"/>
+        </svg>
+      </div>
+
+      <div class="header-right">
+        <nav class="nav">
+          <a href="about_me_EN.html">About</a>
+          <a href="Experience_EN.html" aria-current="page">Experience</a>
+          <a href="Projects_EN.html">Projects</a>
+        </nav>
+        <a class="cv-download" href="CV_EN.pdf" download><span class="cv-label-full">Download CV</span><span class="cv-label-short">CV</span></a>
+        <div class="lang-switch">
+          <a href="Experience_FR.html">FR</a>
+          <a href="Experience_EN.html" class="active">EN</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="page">
+    
+    <section class="hero">
+      <div class="eyebrow">Career path</div>
+      <h1>360° Vision of Complex Products</h1>
+      <p class="subtitle">
+        A career at the crossroads of industry, aerospace, mechatronics, embedded electronics, software and connected services. This path has given me a complete view of the technical, industrial and usage challenges behind a complex product.
+      </p>
+    </section>
+
+    <section class="positioning">
+      <div class="card">
+        <div class="label">Differentiator</div>
+        <div class="value">A complete system vision built by connecting mechanics, electronics, embedded systems, software, data and product into one coherent whole.</div>
+      </div>
+      <div class="card">
+        <div class="label">Experience fields</div>
+        <div class="value">Automotive, instrumentation, aerospace, mechatronics and connected robotics, with hands-on experience in demanding industrial environments.</div>
+      </div>
+      <div class="card">
+        <div class="label">Positioning</div>
+        <div class="value">Cross-functional technical leadership, with the ability to arbitrate between architecture, industrialization, reliability, cost, schedule and customer usage.</div>
+      </div>
+      <div class="card">
+        <div class="label">Product vision</div>
+        <div class="value">A 360° reading of the product, from component to full system, through commissioning, field usage and offer evolution.</div>
+      </div>
+    </section>
+
+    <section class="timeline" id="timeline"></section>
+  </div>
+
+  <script>
+    const CONFIG = {
+      items: [
+        {
+          date: "2018 – Present",
+          tag: "Connected robotics · Technical leadership",
+          role: "CTO / Cross-functional technical leadership",
+          org: "EUVEKA",
+          desc: "Leadership of a connected robotic product integrating mechatronics, electronics, firmware, application software, data and an opening toward cloud and AI services.",
+          impact: "A <strong>complete system vision</strong> and the ability to align teams, architecture, physical product and software usage into one coherent whole.",
+          stack: "Robotics, mechatronics, firmware, Win64, IoT, cloud, data, AI, industrialization.",
+          major: true
+        },
+        {
+          date: "2024 – 2026",
+          tag: "Digital extension",
+          role: "Product transformation toward digital services",
+          org: "EUVEKA · Cloud / AI / IoT",
+          desc: "Development of POCs and MVPs around fit scoring, morphology, web, IoT, video, RFID and generative AI to extend product value beyond hardware.",
+          impact: "An ability to <strong>evolve an industrial product into a services platform</strong> without losing sight of the physical foundation.",
+          stack: "Docker, GCP, web, API, Raspberry Pi, STT, LLM, TTS, WebRTC, RFID/NFC."
+        },
+        {
+          date: "2008 – 2018",
+          tag: "Critical aerospace · Product",
+          role: "Electronics & Software Product Manager",
+          org: "Safran Electronics & Defense",
+          desc: "Leadership of embedded electronic system development for aerospace actuators, in a critical environment with hardware/software coordination and high reliability requirements.",
+          impact: "Strong capability in <strong>complex systems, architecture trade-offs and multidisciplinary leadership</strong> within a top-tier industrial environment.",
+          stack: "Embedded electronics, FPGA, CPU, SoC, real-time software, Simulink, DO-178, DO-254, actuation.",
+          major: true
+        },
+        {
+          date: "2008 – 2018",
+          tag: "Cross-functional expertise",
+          role: "Electronic systems expert · AI committee",
+          org: "Safran",
+          desc: "Recognized as an electronic systems expert and contributor to the AI domain committee, at the intersection of architecture, innovation and technology evolution.",
+          impact: "The ability to <strong>take a broader view</strong> and contribute beyond project scope on topics that shape the company.",
+          stack: "Electronic architecture, innovation, embedded AI, R&T coordination."
+        },
+        {
+          date: "2000 – 2008",
+          tag: "Department leadership · Aerospace",
+          role: "Head of Electronics & Validation Department",
+          org: "SKF Aerospace",
+          desc: "Management of the electronics and validation department for aerospace actuation systems, including structuring methodologies, teams and validation processes.",
+          impact: "A strong foundation in <strong>technical management, validation, industrialization and product robustness</strong>.",
+          stack: "Electronics, validation, actuation, quality, methods, production/maintenance coordination.",
+          major: true
+        },
+        {
+          date: "2000 – 2008",
+          tag: "Product responsibility",
+          role: "Electric Actuator Product Line Manager",
+          org: "SKF Aerospace",
+          desc: "Responsibility for an electric actuation product line in an environment where understanding the real product, integration constraints and customer expectations is central.",
+          impact: "The <strong>end-to-end product vision</strong> dimension, with a simultaneous reading of technical, industrial and market challenges.",
+          stack: "Product, electric actuation, validation, customer constraints, system performance."
+        },
+        {
+          date: "Before 2000",
+          tag: "Automotive · Usage · Product",
+          role: "Electric Screwdriving Product Line Manager",
+          org: "Georges Renault",
+          desc: "Product responsibility in the electric screwdriving field, with direct exposure to usage, tooling, mechanics, electronics and industrial performance issues.",
+          impact: "The <strong>end-to-end product vision</strong> dimension, with a simultaneous reading of technical, industrial and market challenges.",
+          stack: "Industrial product, electromechanics, workshop usage, performance and reliability."
+        },
+        {
+          date: "Early career",
+          tag: "Instrumentation",
+          role: "Head of Electronic Development",
+          org: "Garos S.A.",
+          desc: "Building the technical foundation in electronic development applied to instrumentation, close to materials, components and real product constraints.",
+          impact: "The initial foundation of a <strong>cross-functional</strong> practice, with direct exposure to components, field constraints and product reality.",
+          stack: "Instrumentation, electronics, development, field constraints."
+        }
+      ]
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderTimeline(config) {
+      const timelineEl = document.getElementById("timeline");
+      timelineEl.innerHTML = "";
+
+      (config.items || []).forEach((item, index) => {
+        const side = index % 2 === 0 ? "left" : "right";
+        const article = document.createElement("article");
+        article.className = `item ${item.major ? "major" : ""}`.trim();
+
+        const contentHtml = `
+          <div class="content ${side}">
+            ${item.date ? `<div class="date">${escapeHtml(item.date)}</div>` : ""}
+            ${item.tag ? `<div class="tag">${escapeHtml(item.tag)}</div>` : ""}
+            ${item.role ? `<div class="role">${escapeHtml(item.role)}</div>` : ""}
+            ${item.org ? `<div class="org">${escapeHtml(item.org)}</div>` : ""}
+            ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ""}
+            ${item.impact ? `<div class="impact">${item.impact}</div>` : ""}
+            ${item.stack ? `<div class="stack">${escapeHtml(item.stack)}</div>` : ""}
+          </div>
+        `;
+
+        article.innerHTML = side === "left" ? contentHtml + "<div></div>" : "<div></div>" + contentHtml;
+        timelineEl.appendChild(article);
+      });
+    }
+
+    renderTimeline(CONFIG);
+  </script>
+</body>
+</html>

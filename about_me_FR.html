@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>À propos — Pascal Nauroy</title>
+  <style>
+    :root {
+      --bg: #030915;
+      --bg2: #081427;
+      --panel: rgba(10, 18, 32, 0.96);
+      --panel2: rgba(14, 24, 41, 0.96);
+      --text: #f4f8ff;
+      --muted: #93a6c3;
+      --accent: #7cc8ff;
+      --accent2: #84f3d2;
+      --gold: #f4c978;
+      --line: rgba(255,255,255,0.08);
+      --chip: rgba(124,200,255,0.1);
+      --shadow: 0 18px 40px rgba(0,0,0,0.32);
+      --font-sm: 12px;
+      --font-md: 16px;
+      --font-lg: clamp(30px, 4vw, 42px);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top center, #13284b 0%, #0a1730 24%, var(--bg) 58%, #02060d 100%);
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 64px;
+    }
+.hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) 320px;
+      gap: 48px;
+      align-items: center;
+      min-height: 58vh;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 22px;
+      color: var(--text);
+      font-size: var(--font-lg);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      font-size: 22px;
+      line-height: 1.4;
+      margin: 0 0 16px;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .body {
+      color: #dce5f1;
+      font-size: var(--font-md);
+      line-height: 1.72;
+      margin: 0 0 18px;
+    }
+
+    .body strong {
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .skills {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 8px 10px;
+      border: 1px solid rgba(124,200,255,0.16);
+      background: rgba(124,200,255,0.10);
+      color: var(--accent);
+      font-size: var(--font-sm);
+      font-weight: 700;
+      border-radius: 999px;
+    }
+
+    .portrait-wrap {
+      justify-self: center;
+      width: 100%;
+      max-width: 290px;
+    }
+
+    .portrait-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(18,30,48,0.98), rgba(10,16,27,0.98));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 10px;
+    }
+
+    .portrait-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(124,200,255,0.14), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(132,243,210,0.10), transparent 30%);
+      pointer-events: none;
+    }
+
+    .portrait {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      border-radius: 16px;
+    }
+
+    .caption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: var(--font-sm);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        min-height: 0;
+      }
+
+      .portrait-wrap {
+        justify-self: start;
+        max-width: 240px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 14px 16px 44px;
+      }
+.nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+
+      .lead {
+        font-size: 21px;
+      }
+
+      .body {
+        font-size: 17px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+    }
+@media (max-width: 760px) {
+.nav {
+        gap: 18px;
+      }
+    }
+.nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 34px;
+      min-width: 260px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+@media (max-width: 760px) {
+.nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+    }
+
+  
+    body {
+      padding-top: 84px;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(18,37,69,0.96), rgba(15,31,58,0.96));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .site-header .topbar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      margin-bottom: 0;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 44px minmax(240px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #11213b, #091120);
+      border: 1px solid rgba(124,200,255,0.28);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+
+    .logo svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .search {
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      padding: 0 80px 0 14px;
+      outline: none;
+    }
+
+    .search::placeholder { color: #8fa0b8; }
+
+    .search-kbd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+      color: #dbe7f6;
+    }
+
+    .search-kbd span {
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 34px;
+      min-width: 260px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    .page {
+      max-width: 1280px !important;
+      margin: 0 auto;
+      padding: 20px 24px 64px !important;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 92px;
+      }
+
+      .site-header .topbar {
+        padding: 12px 16px;
+      }
+
+      .topbar {
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+      }
+
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+
+      .page {
+        padding: 16px 16px 44px !important;
+      }
+    }
+
+  
+    .topbar {
+      grid-template-columns: 44px auto;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        grid-template-columns: 40px 1fr;
+      }
+    }
+  
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+      min-width: 260px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .lang-switch a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .lang-switch a.active {
+      background: rgba(124,200,255,0.18);
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav a[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 760px) {
+      .header-right {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        min-width: 0;
+      }
+      .nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+    }
+    
+  
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cv-download:hover {
+      border-color: rgba(124,200,255,0.30);
+      background: rgba(124,200,255,0.10);
+      color: var(--accent);
+    }
+
+    @media (max-width: 760px) {
+      .cv-download {
+        order: 2;
+      }
+    }
+
+  
+
+    /* mobile header compact one-line */
+    .cv-label-short { display: none; }
+
+    @media (max-width: 760px) {
+      body {
+        padding-top: 72px !important;
+      }
+
+      .site-header .topbar {
+        padding: 10px 12px !important;
+      }
+
+      .topbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        grid-template-columns: none !important;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+      }
+
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+      }
+
+      .nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 11px !important;
+      }
+
+      .nav a {
+        flex: 0 1 auto;
+        white-space: nowrap;
+      }
+
+      .lang-switch {
+        flex: 0 0 auto;
+        gap: 4px;
+        padding: 3px;
+      }
+
+      .lang-switch a {
+        font-size: 10px;
+        padding: 6px 8px;
+      }
+
+      .cv-download {
+        order: 0 !important;
+        flex: 0 0 auto;
+        padding: 6px 8px !important;
+        gap: 0 !important;
+        font-size: 10px !important;
+      }
+
+      .cv-label-full { display: none; }
+      .cv-label-short { display: inline; }
+    }
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="topbar">
+      <div class="logo" aria-label="Logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2c-3.1 2.6-6.1 4-8.7 4.6.2 6 4.3 11.2 8.7 15.4 4.4-4.2 8.5-9.4 8.7-15.4C18.1 6 15.1 4.6 12 2Zm-1.1 5.3 5.2 2.3-2.6.8-2 3.8-.9-2.6-2.7-.5 3-1.1Z"/>
+        </svg>
+      </div>
+
+      <div class="header-right">
+        <nav class="nav">
+          <a href="about_me_FR.html" aria-current="page">À propos</a>
+          <a href="Experience_FR.html">Expérience</a>
+          <a href="Projects_FR.html">Projets</a>
+        </nav>
+        <a class="cv-download" href="CV_FR.pdf" download><span class="cv-label-full">Télécharger CV</span><span class="cv-label-short">CV</span></a>
+        <div class="lang-switch">
+          <a href="about_me_FR.html" class="active">FR</a>
+          <a href="about_me_EN.html">EN</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="page">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Profil exécutif</div>
+        <h1>À propos</h1>
+
+        <p class="lead">
+          Je suis un dirigeant technique et architecte de systèmes complexes, avec plus de 25 ans d’expérience à la croisée de l’aéronautique, de la robotique, de l’embarqué critique, du logiciel et de la data.
+        </p>
+
+        <p class="body">
+          Mon parcours s’est construit dans des environnements où la <strong>robustesse technique</strong>, la <strong>vision produit</strong> et la <strong>capacité à faire converger plusieurs métiers</strong> sont décisives. Chez <strong>SKF Aerospace</strong> puis <strong>Safran Electronics</strong>, j’ai développé une culture forte des systèmes critiques, de l’actionnement, de la validation et des arbitrages d’architecture en contexte industriel exigeant.
+        </p>
+
+        <p class="body">
+          Chez <strong>EUVEKA</strong>, j’ai prolongé cette base en pilotant un produit robotique connecté de bout en bout, en reliant mécatronique, électronique, firmware, logiciel, cloud et IA dans une même trajectoire. Ce que j’apporte aujourd’hui à une entreprise, ce n’est pas seulement une expertise technique large, mais une capacité à <strong>donner de la cohérence</strong>, à <strong>structurer une feuille de route</strong>, à <strong>faire dialoguer les équipes</strong> et à transformer une technologie complexe en offre compréhensible, industrialisable et créatrice de valeur.
+        </p>
+
+        <div class="skills">
+          <span class="chip">CTO / Direction technique</span>
+          <span class="chip">Architecture système</span>
+          <span class="chip">Robotique & mécatronique</span>
+          <span class="chip">Électronique critique</span>
+          <span class="chip">Firmware & logiciel</span>
+          <span class="chip">Cloud, data & IA</span>
+        </div>
+      </div>
+
+      <div class="portrait-wrap">
+        <div class="portrait-card">
+          <img class="portrait" src="photo.png" alt="Pascal Nauroy" />
+        </div>
+        <div class="caption">
+          Vision produit 360° · systèmes complexes · leadership multi-métiers
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

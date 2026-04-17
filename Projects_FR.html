@@ -151,6 +151,55 @@
       max-width: 920px;
     }
 
+    .app-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+      max-width: 920px;
+    }
+
+    .app-link-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 16px;
+      border: 1px solid rgba(124,200,255,0.18);
+      background: linear-gradient(180deg, rgba(124,200,255,0.10), rgba(255,255,255,0.03));
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transition: .18s ease;
+    }
+
+    .app-link-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(124,200,255,0.40);
+      background: linear-gradient(180deg, rgba(124,200,255,0.16), rgba(255,255,255,0.05));
+    }
+
+    .app-link-label {
+      color: var(--accent);
+      font-size: var(--font-sm);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .app-link-title {
+      font-size: var(--font-md);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .app-link-url {
+      color: var(--muted);
+      font-size: var(--font-sm);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+
     .filters {
       display: flex;
       justify-content: flex-end;
@@ -662,6 +711,10 @@
       .page {
         padding: 16px 16px 44px !important;
       }
+
+      .app-links {
+        grid-template-columns: 1fr;
+      }
     }
 
   
@@ -902,7 +955,7 @@
         <div class="eyebrow">Projets sélectionnés</div>
         <h1>Projets</h1>
         <p>Un portfolio regroupé par thématique pour refléter l’ensemble du parcours : actionnement aéronautique et électronique critique, robotique connectée, services cloud et IA, ainsi que des systèmes edge prolongeant les produits physiques vers des plateformes pilotées par la donnée.</p>
-      </div>
+</div>
 
       <div>
         <div class="filters">
@@ -1024,6 +1077,7 @@
           {
             title: "Migration web MIMEO",
             detailUrl: "mimeoweb_FR.html",
+            appUrl: "https://mimeo-pro-style.base44.app",
             img: "mimeoweb.png",
             period: "2026",
             org: "EUVEKA / Applicatif",
@@ -1075,6 +1129,7 @@
           {
             title: "Plateforme de fit scoring",
             detailUrl: "fitscore_FR.html",
+            appUrl: "https://fit-score-pulse.base44.app",
             img: "fitscore.png",
             period: "2026",
             org: "POC digital",
@@ -1227,7 +1282,10 @@
             </div>
             <div class="footer">
               <span class="kind">${escapeHtml(card.kind || "")}</span>
-              <a href="${escapeHtml(card.detailUrl || "#")}" class="details">Voir le détail →</a>
+              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+                ${card.appUrl ? `<a href="${escapeHtml(card.appUrl)}" class="details" target="_blank" rel="noopener noreferrer">Voir l’application ↗</a>` : ``}
+                <a href="${escapeHtml(card.detailUrl || "#")}" class="details">Voir le détail →</a>
+              </div>
             </div>
           </div>
         </article>

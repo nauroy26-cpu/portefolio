@@ -1,0 +1,8 @@
+@"
+*.zip
+*.py
+Dockerfile
+*.docx
+*.md
+.zip
+"@ | Set-Content .gitignore
